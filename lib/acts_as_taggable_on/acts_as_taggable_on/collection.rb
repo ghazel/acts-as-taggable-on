@@ -92,7 +92,7 @@ module ActsAsTaggableOn::Taggable
         tag_joins = [
         ].compact
 
-        [tagging_joins, tag_joins].each(&:reverse!) if ActiveRecord::VERSION::MAJOR < 3
+        [tagging_joins, tag_joins].each(&:reverse!) if (ActiveRecord::VERSION::MAJOR < 3 and not defined? ActiveRecord::BUG_6668_FIXED)
 
         ## Generate scope:
         tagging_scope = ActsAsTaggableOn::Tagging.select("#{ActsAsTaggableOn::Tagging.table_name}.tag_id, COUNT(#{ActsAsTaggableOn::Tagging.table_name}.tag_id) AS tags_count")
